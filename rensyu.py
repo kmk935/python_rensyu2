@@ -1,4 +1,5 @@
 import tkinter
+import fight_class
 
 # マップの描画
 def draw_map():
@@ -106,6 +107,9 @@ brave_x = 1
 brave_y = 0
 # 鍵取得フラグ
 flag_key = False
+
+# 戦闘画面の準備
+fightmanager = fight_class.FightManager()
 
 draw_map()
 root.mainloop()
