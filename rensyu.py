@@ -6,6 +6,8 @@ def draw_map():
     for y in range(0, MAX_HEIGHT):
         for x in range(0, MAX_WIDTH):
             p = map_data[y][x]
+            if p >= 5:
+                p = 5
             canvas.create_image(x*62+31, y*62+31, image=images[p])
 
     # 主人公表示
@@ -90,17 +92,18 @@ images = [tkinter.PhotoImage(file="img/chap6-mapfield.png"),
           tkinter.PhotoImage(file="img/chap6-mapwall.png"),
           tkinter.PhotoImage(file="img/chap6-mapgoal.png"),
           tkinter.PhotoImage(file="img/chap6-mapkey.png"),
-          tkinter.PhotoImage(file="img/chap6-mapman.png")]
+          tkinter.PhotoImage(file="img/chap6-mapman.png"),
+          tkinter.PhotoImage(file="img/chap7-mapmonster.png")]
 
 # マップデータ
 MAX_WIDTH = 10
 MAX_HEIGHT = 7
 map_data = [[1, 0, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 0, 0, 1, 2, 0, 0, 1, 3, 1],
+            [1, 0, 0, 1, 2, 0, 6, 1, 3, 1],
             [1, 1, 0, 1, 1, 1, 0, 1, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+            [1, 0, 0, 5, 0, 0, 0, 1, 0, 1],
             [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 6, 0, 0, 0, 0, 0, 0, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
 # 主人公の位置
 brave_x = 1
