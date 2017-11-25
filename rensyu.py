@@ -31,6 +31,8 @@ def check_move(x, y):
                 ending()
             else:
                 return
+        elif p >= 5:
+            fightmanager.fight_start(map_data, x, y)
         brave_x = x
         brave_y = y
         canvas.coords("brave", brave_x*62+31, brave_y*62+31)
