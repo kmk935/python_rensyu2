@@ -111,6 +111,9 @@ map_data = [[1, 0, 1, 1, 1, 1, 1, 1, 1, 1],
 # 主人公の位置
 brave_x = 1
 brave_y = 0
+brave = fight_class.Brave()
+print(brave.get_atk())
+
 # 鍵取得フラグ
 flag_key = False
 
