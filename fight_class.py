@@ -1,29 +1,63 @@
 import tkinter
 import random
+import time
 
 class FightManager:
     # コンストラクタ
     def __init__(self):
         self.dialog = tkinter.Frame(width=820, height=434)
         self.dialog.place(x=10, y=10)
-        canvas = tkinter.Canvas(self.dialog, width=820, height=434)
-        canvas.place(x=0, y=0)
-        canvas.create_rectangle(0, 0, 620, 434, fill="black")
+        self.canvas = tkinter.Canvas(self.dialog, width=820, height=434)
+        self.canvas.place(x=0, y=0)
+        self.canvas.create_rectangle(0, 0, 620, 434, fill="black")
         # ボタン作成
-        winbutton = tkinter.Button(self.dialog, text="勝った")
-        winbutton.place(x=180, y=340)
-        winbutton["command"] = self.fight_win
-        losebutton = tkinter.Button(self.dialog, text="負けた")
-        losebutton.place(x=360, y=340)
-        losebutton["command"] = self.fight_lose
+        self.fbutton = tkinter.Button(self.dialog, text="攻撃")
+        self.fbutton.place(x=180, y=340)
+        self.fbutton["command"] = self.click_fight
+        self.rbutton = tkinter.Button(self.dialog, text="力を溜める")
+        self.rbutton.place(x=360, y=340)
+        self.rbutton["command"] = self.click_resarve
+        # 画像の読み込み
+        self.images = [tkinter.PhotoImage(file="img/chap7-monseter1.png"), tkinter.PhotoImage(file="img/chap7-monster2.png")]
+        self.canvas.create_image(180, 160, image=self.images[0])
+        # ラベル作成
+        self.label = tkinter.Label(self.dialog, text="ラベル", fg="white", bg="black", justify="left")
+        self.label.place(x=360, y=10)
         # 非表示
         self.dialog.place_forget()
     # 戦闘開始
-    def fight_start(self, map_data, x, y):
+    def fight_start(self, map_data, x, y, brave):
         self.dialog.place(x=10, y=10)
         self.map_data = map_data
         self.brave_x = x
         self.brave_y = y
+        self.brave = brave
+        # モンスターの画像を表示
+        p = self.map_data[y][x]
+        self.canvas.delete("all")
+        self.canvas.create_rectangle(0, 0, 620, 434, fill="black")
+        self.canvas.create_image(180, 160, image=self.images[p-5])
+        self.label["text"] = ""
+        # モンスターのオブジェクトを作成
+        if p == 5:
+            self.monster = Monster1()
+        elif p == 6:
+            self.monster = Monster2()
+        self.label["text"] = self.monster.name + "が現れた"
+    # 攻撃ボタン
+    def click_fight(self):
+        self.fbutton["state"] = "disabled"
+        self.rbutton["state"] = "disabled"
+        self.do_turn(self.brave.get_atk())
+    # 力を溜めるボタン
+    def click_resarve(self):
+        self.fbutton["state"] = "disabled"
+        self.rbutton["state"] = "disabled"
+        self.brave.reserve()
+        self.do_turn(-1)
+    # 戦闘処理
+    def do_turn(self, brave_atk):
+        pass
     # 勝利
     def fight_win(self):
         self.map_data[self.brave_y][self.brave_x] = 0
